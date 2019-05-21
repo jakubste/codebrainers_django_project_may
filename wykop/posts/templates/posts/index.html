@@ -1,0 +1,21 @@
+<html>
+
+<head>
+  <title>Mikroblog</title>
+</head>
+
+<body>
+  <p>
+    {% if user.is_authenticated %}
+      <a href="{% url 'accounts:logout' %}">Wyloguj</a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Zaloguj</a>
+    {% endif %}
+  </p>
+
+  <p>{{ user }}</p>
+
+  Hello world from template!
+</body>
+
+</html>
