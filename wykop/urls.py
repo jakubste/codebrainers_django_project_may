@@ -17,13 +17,17 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
-from wykop.posts.views import HelloWorldView
+from wykop.posts.views import (
+    HelloWorldView,
+    PostList,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('wykop.accounts.urls')),
     # path('', hello_world),
     path('', HelloWorldView.as_view()),
+    path('posts/', PostList.as_view(), name='post-list'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block header %}{{ block.super }} <a href="{% url 'post-create' %}">+dodaj</a>{% endblock %}
+
+{% block content %}
+    <ul>
+    {% for post in object_list %}
+        <li>{{ post.created|date }} - <a href="{% url 'post-detail' pk=post.pk %}">{{ post.title }}</a></li>
+    {% empty %}
+        <li>Brak wpisów.</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
