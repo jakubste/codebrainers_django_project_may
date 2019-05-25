@@ -22,6 +22,7 @@ from wykop.posts.views import (
     PostList,
     PostDetail,
     PostCreate,
+    PostUpdate,
 )
 
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
     path('posts/', PostList.as_view(), name='post-list'),
     path('posts/new', PostCreate.as_view(), name='post-create'),
     path('post/<int:pk>', PostDetail.as_view(), name='post-detail'),
+    path('post/<int:pk>/edit', PostUpdate.as_view(), name='post-update'),
 ]
 
 if settings.DEBUG:

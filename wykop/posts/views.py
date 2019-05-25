@@ -1,6 +1,7 @@
 
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
+    UserPassesTestMixin,
 )
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -10,6 +11,7 @@ from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
+    UpdateView,
 )
 
 from .models import Post
@@ -59,3 +61,18 @@ class PostCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    template_name = 'posts/update.html'
+    model = Post
+    fields = ['title', 'text']
+
+    def test_func(self):
+        obj = self.get_object()
+        return self.request.user == obj.author
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = 'Edycja ' + self.object.title
+        return data
