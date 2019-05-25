@@ -1,4 +1,7 @@
 
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+)
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import (
@@ -6,6 +9,7 @@ from django.views.generic import (
     View,
     ListView,
     DetailView,
+    CreateView,
 )
 
 from .models import Post
@@ -41,3 +45,17 @@ class PostDetail(DetailView):
         data = super().get_context_data(**kwargs)
         data['title'] = self.object.title
         return data
+
+
+class PostCreate(LoginRequiredMixin, CreateView):
+    template_name = 'posts/create.html'
+    model = Post
+    fields = ['title', 'text']
+
+    extra_context = {
+        'title': 'Dodawanie wpisu',
+    }
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
