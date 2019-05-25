@@ -12,4 +12,4 @@ from django.views.generic import TemplateView, View
 #           return render(request, 'posts/index.html')
 
 class HelloWorldView(TemplateView):
-    template_name = 'posts/index.html'
+    template_name = 'base.html'
