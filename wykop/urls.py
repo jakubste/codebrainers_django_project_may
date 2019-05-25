@@ -20,6 +20,7 @@ from django.urls import include, path
 from wykop.posts.views import (
     HelloWorldView,
     PostList,
+    PostDetail,
 )
 
 urlpatterns = [
@@ -28,6 +29,7 @@ urlpatterns = [
     # path('', hello_world),
     path('', HelloWorldView.as_view()),
     path('posts/', PostList.as_view(), name='post-list'),
+    path('posts/new', PostCreate.as_view(), name='post-create'),
 ]
 
 if settings.DEBUG:

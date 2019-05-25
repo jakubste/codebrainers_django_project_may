@@ -5,6 +5,7 @@ from django.views.generic import (
     TemplateView,
     View,
     ListView,
+    DetailView,
 )
 
 from .models import Post
@@ -30,3 +31,13 @@ class PostList(ListView):
     extra_context = {
         'title': 'Wpisy',
     }
+
+
+class PostDetail(DetailView):
+    template_name = 'posts/detail.html'
+    model = Post
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['title'] = self.object.title
+        return data
