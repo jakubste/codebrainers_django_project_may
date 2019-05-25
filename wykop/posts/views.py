@@ -1,3 +1,4 @@
+from datetime import timedelta
 
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
@@ -12,7 +13,10 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
+    DeleteView,
 )
+from django.utils import timezone
+from django.urls import reverse_lazy
 
 from .models import Post
 
@@ -76,3 +80,16 @@ class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         data = super().get_context_data(**kwargs)
         data['title'] = 'Edycja ' + self.object.title
         return data
+
+
+class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    template_name = 'posts/delete.html'
+    model = Post
+    success_url = reverse_lazy('post-list')
+
+    def test_func(self):
+        obj = self.get_object()
+        return (
+            (self.request.user == obj.author) and
+            (timezone.now() - obj.created < timedelta(0, 15*60))
+        )
