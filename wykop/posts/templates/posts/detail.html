@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <small>{{ object.created|date }}, {{ object.created|time }} | <a href="{% url 'post-update' pk=object.pk %}">Edytuj</a> | <a href="{% url 'post-delete' pk=object.pk %}">Usuń</a> | autor: {{ object.author }}</small>
+    <p>{{ object.text }}</p>
+{% endblock %}

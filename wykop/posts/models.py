@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import deletion
+from django.urls import reverse
 
 from wykop.accounts.models import User
 
@@ -12,3 +13,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
