@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
+{% load embed_video_tags %}
+
 {% block content %}
     <small>{{ object.created|date }}, {{ object.created|time }} | <a href="{% url 'posts:update' pk=object.pk %}">Edytuj</a> | <a href="{% url 'posts:delete' pk=object.pk %}">Usuń</a> | autor: {{ object.author }}</small>
     <p>{{ object.text }}</p>
-    <img src="{{ object.image.url }}">
+    {% if object.image %}
+        <img src="{{ object.image.url }}">
+    {% endif %}
+    {% if object.video %}
+        {% video object.video '800x600' %}
+    {% endif %}
 {% endblock %}

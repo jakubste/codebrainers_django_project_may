@@ -1,13 +1,28 @@
 {% extends "base.html" %}
 
+{% load bootstrap_pagination %}
+
 {% block header %}{{ block.super }} <a href="{% url 'posts:create' %}">+dodaj</a>{% endblock %}
 
 {% block content %}
     <ul>
     {% for post in object_list %}
-        <li>{{ post.created|date }} - <a href="{% url 'posts:detail' pk=post.pk %}">{{ post.title }}</a></li>
+        <li>
+            {{ post.created }} -
+            <a href="{% url 'posts:detail' pk=post.pk %}">
+                {{ post.title }}
+            </a>
+            {% if post.image %}
+                <br>
+                <img class="posts-list-img" src="{{ post.image.url }}">
+            {% endif %}
+        </li>
     {% empty %}
         <li>Brak wpisów.</li>
     {% endfor %}
     </ul>
+
+    {% bootstrap_paginate page_obj show_first_last=True %}
+
 {% endblock %}
+

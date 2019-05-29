@@ -1,22 +1,13 @@
 from datetime import timedelta
 
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin,
-    UserPassesTestMixin,
-)
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models.aggregates import Sum
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import (
-    TemplateView,
-    View,
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-)
-from django.utils import timezone
 from django.urls import reverse_lazy
+from django.utils import timezone
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  TemplateView, UpdateView, View)
 
 from .models import Post
 
@@ -35,13 +26,23 @@ class HelloWorldView(TemplateView):
 
 class PostList(ListView):
     template_name = 'posts/list.html'
-    # queryset = Post.objects.filter(published=True)
+    # queryset = Post.objects.filter(published=True).order_by('-created')
     model = Post
+    ordering = '-created'
+    paginate_by = 3
 
     extra_context = {
         'title': 'Wpisy',
     }
 
+
+class TopPostsList(PostList):
+    queryset = Post.objects.annotate(score=Sum('votes__value')).order_by('-score')
+    ordering = ''
+
+    extra_context = {
+        'title': 'Najlepsze wpisy',
+    }
 
 class PostDetail(DetailView):
     template_name = 'posts/detail.html'

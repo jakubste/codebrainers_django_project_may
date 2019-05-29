@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'wykop.accounts',
     'wykop.posts',
     'debug_toolbar',
+    'bootstrap_pagination',
 ]
 
 MIDDLEWARE = [

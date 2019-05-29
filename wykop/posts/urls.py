@@ -1,7 +1,7 @@
 from django.urls import path
 
 from wykop.posts.views import (PostCreate, PostDelete, PostDetail, PostList,
-                               PostUpdate)
+                               PostUpdate, TopPostsList)
 
 app_name = 'posts'
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:pk>', PostDetail.as_view(), name='detail'),
     path('<int:pk>/edit', PostUpdate.as_view(), name='update'),
     path('<int:pk>/delete', PostDelete.as_view(), name='delete'),
+    path('top/', TopPostsList.as_view(), name='top-list'),
 ]

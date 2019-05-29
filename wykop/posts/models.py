@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import deletion
 from django.urls import reverse
+from embed_video.fields import EmbedVideoField
 
 from wykop.accounts.models import User
 
@@ -11,6 +12,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, deletion.PROTECT)
     image = models.ImageField(upload_to='post_images/', blank=True)
+    video = EmbedVideoField(null=True, blank=True)
 
     def __str__(self):
         return self.title
