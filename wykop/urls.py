@@ -14,29 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from wykop.posts.views import (
-    HelloWorldView,
-    PostList,
-    PostDetail,
-    PostCreate,
-    PostUpdate,
-    PostDelete,
-)
+from wykop.posts.views import (HelloWorldView, PostCreate, PostDelete,
+                               PostDetail, PostList, PostUpdate)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('wykop.accounts.urls')),
+    path('posts/', include('wykop.posts.urls')),
     # path('', hello_world),
     path('', HelloWorldView.as_view()),
-    path('posts/', PostList.as_view(), name='post-list'),
-    path('posts/new', PostCreate.as_view(), name='post-create'),
-    path('post/<int:pk>', PostDetail.as_view(), name='post-detail'),
-    path('post/<int:pk>/edit', PostUpdate.as_view(), name='post-update'),
-    path('post/<int:pk>/delete', PostDelete.as_view(), name='post-delete'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar

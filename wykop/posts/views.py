@@ -56,7 +56,7 @@ class PostDetail(DetailView):
 class PostCreate(LoginRequiredMixin, CreateView):
     template_name = 'posts/create.html'
     model = Post
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'image']
 
     extra_context = {
         'title': 'Dodawanie wpisu',
@@ -70,7 +70,7 @@ class PostCreate(LoginRequiredMixin, CreateView):
 class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'posts/update.html'
     model = Post
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'image']
 
     def test_func(self):
         obj = self.get_object()
@@ -85,7 +85,7 @@ class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = 'posts/delete.html'
     model = Post
-    success_url = reverse_lazy('post-list')
+    success_url = reverse_lazy('posts:list')
 
     def test_func(self):
         obj = self.get_object()

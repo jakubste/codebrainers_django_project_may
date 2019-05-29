@@ -10,9 +10,33 @@ class Post(models.Model):
     text = models.TextField(default='')
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, deletion.PROTECT)
+    image = models.ImageField(upload_to='post_images/', blank=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
+        return reverse('posts:detail', kwargs={'pk': self.pk})
+
+
+class Vote(models.Model):
+    class Meta:
+        unique_together = (
+            ('user', 'post'),
+        )
+    PLUS = 1
+    MINUS = -1
+    VALUE_CHOICES = (
+        (PLUS, '+'),
+        (MINUS, '-'),
+    )
+    value = models.SmallIntegerField(choices=VALUE_CHOICES)
+    user = models.ForeignKey(User, deletion.PROTECT, related_name='votes')
+    post = models.ForeignKey(Post, deletion.PROTECT, related_name='votes')
+
+    def __str__(self):
+        return '({}) {} - {}'.format(
+            self.get_value_display(),
+            self.user,
+            self.post,
+        )

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <small>{{ object.created|date }}, {{ object.created|time }} | <a href="{% url 'post-update' pk=object.pk %}">Edytuj</a> | <a href="{% url 'post-delete' pk=object.pk %}">Usuń</a> | autor: {{ object.author }}</small>
+    <small>{{ object.created|date }}, {{ object.created|time }} | <a href="{% url 'posts:update' pk=object.pk %}">Edytuj</a> | <a href="{% url 'posts:delete' pk=object.pk %}">Usuń</a> | autor: {{ object.author }}</small>
     <p>{{ object.text }}</p>
+    <img src="{{ object.image.url }}">
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from wykop.posts.models import Post
+from wykop.posts.models import Post, Vote
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -8,3 +8,4 @@ class PostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post, PostAdmin)
+admin.site.register(Vote)
