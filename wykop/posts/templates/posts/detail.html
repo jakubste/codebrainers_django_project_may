@@ -4,6 +4,21 @@
 
 {% block content %}
     <small>{{ object.created|date }}, {{ object.created|time }} | <a href="{% url 'posts:update' pk=object.pk %}">Edytuj</a> | <a href="{% url 'posts:delete' pk=object.pk %}">Usuń</a> | autor: {{ object.author }}</small>
+
+    {% if user.is_superuser %}
+        <form method="post" action="{% url 'accounts:ban' object.author.pk %}">
+            {% csrf_token %}
+
+            {% if not object.author.banned %}
+                <input type="hidden" name="set" value=1>
+                <input type="submit" value="Zbanuj">
+            {% else %}
+                <input type="hidden" name="set" value=0>
+                <input type="submit" value="Odbanuj">
+            {% endif %}
+        </form>
+    {% endif %}
+
     <p>{{ object.text }}</p>
     {% if object.image %}
         <img src="{{ object.image.url }}">

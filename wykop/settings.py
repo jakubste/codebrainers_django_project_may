@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'wykop.posts',
     'debug_toolbar',
     'bootstrap_pagination',
+    'embed_video',
 ]
 
 MIDDLEWARE = [
