@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import deletion
 from django.urls import reverse
+from django_extensions.db.models import TimeStampedModel
 from embed_video.fields import EmbedVideoField
 
 from wykop.accounts.models import User
@@ -42,3 +43,9 @@ class Vote(models.Model):
             self.user,
             self.post,
         )
+
+
+class Comment(TimeStampedModel):
+    post = models.ForeignKey(Post, deletion.PROTECT, related_name='comments')
+    user = models.ForeignKey(User, deletion.PROTECT, related_name='comments')
+    content = models.TextField(default='')

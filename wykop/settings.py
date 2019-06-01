@@ -25,7 +25,7 @@ SECRET_KEY = '@0^dlz$1j*me-xjdw+ibp6s21i*hqyxc0^%(aqi)hxr3wbm*#j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,3 +142,7 @@ LOGIN_URL = '/login'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+import django_heroku
+django_heroku.settings(locals())
+

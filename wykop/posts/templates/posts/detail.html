@@ -26,4 +26,17 @@
     {% if object.video %}
         {% video object.video '800x600' %}
     {% endif %}
+
+    <h4>Komentarze:</h4>
+
+    <form method="post" action="{% url 'posts:comment' object.pk %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="submit" value="Wyślij" {% if user.banned %} disabled {% endif %}>
+    </form>
+
+    {% for comment in object.comments.all %}
+        {% include 'posts/comment.html' %}
+    {% endfor %}
+
 {% endblock %}

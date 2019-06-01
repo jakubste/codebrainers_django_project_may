@@ -1,7 +1,7 @@
 from django.urls import path
 
-from wykop.posts.views import (PostCreate, PostDelete, PostDetail, PostList,
-                               PostUpdate, TopPostsList)
+from wykop.posts.views import (CommentCreateView, PostCreate, PostDelete,
+                               PostDetail, PostList, PostUpdate, TopPostsList)
 
 app_name = 'posts'
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('<int:pk>/edit', PostUpdate.as_view(), name='update'),
     path('<int:pk>/delete', PostDelete.as_view(), name='delete'),
     path('top/', TopPostsList.as_view(), name='top-list'),
+    path('comment/<int:post_pk>', CommentCreateView.as_view(), name='comment')
 ]
