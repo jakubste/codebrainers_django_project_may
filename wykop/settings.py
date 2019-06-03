@@ -143,6 +143,10 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-import django_heroku
-django_heroku.settings(locals())
-
+try:
+    import django_heroku
+    django_heroku.settings(locals())
+except:
+    # fix for local development
+    # I can't install psycopg on my local machine for a weird reason
+    pass
