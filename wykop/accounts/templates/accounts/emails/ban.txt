@@ -1,0 +1,5 @@
+{% extends 'accounts/emails/base.txt' %}
+
+{% block content %}
+Zostałeś zbanowany.
+{% endblock %}

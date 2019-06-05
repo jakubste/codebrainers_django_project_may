@@ -1,0 +1,6 @@
+Drogi {{ user.username }},
+
+{% block content %}
+{% endblock %}
+
+Administracja
