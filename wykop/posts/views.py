@@ -8,9 +8,13 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView, View)
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.viewsets import ModelViewSet
 
 from wykop.posts.forms import CommentForm
 from wykop.posts.models import Comment
+from wykop.posts.permissions import IsAuthorOrReadOnly
+from wykop.posts.serializers import PostSerializer
 
 from .models import Post
 
@@ -121,3 +125,15 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return self.get_post().get_absolute_url()
+
+
+class PostViewSet(ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+        IsAuthorOrReadOnly
+    )
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)

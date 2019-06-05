@@ -7,3 +7,4 @@ django-embed-video
 gunicorn
 django-heroku
 django-bootstrap-pagination
+djangorestframework
